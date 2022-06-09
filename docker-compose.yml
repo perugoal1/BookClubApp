@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  frontend:
+    image: node:latest
+    volumes:
+      - ./frontend/:/home/node/app
+    ports:
+      - 3000:3000
+    command: bash -c "cd /home/node/app && npm install && npm start"
+  backend:
+    image: node:latest
+    volumes:
+      - ./backend/:/home/node/app
+    ports:
+      - 3001:3001
+    command: bash -c "cd /home/node/app && npm install && npm start"
+  database:
+    image: mongo:latest
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: bookclub
+    volumes:
+      - ./database/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+volumes:
+  logvolume01: {}
