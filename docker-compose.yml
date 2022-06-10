@@ -3,17 +3,22 @@ services:
   frontend:
     image: node:latest
     volumes:
-      - ./frontend/:/home/node/app
+      - ./frontend/:/home/node/app/
     ports:
       - 3000:3000
     command: bash -c "cd /home/node/app && npm install && npm start"
   backend:
     image: node:latest
     volumes:
-      - ./backend/:/home/node/app
+      - ./backend/:/home/node/app/
     ports:
       - 3001:3001
     command: bash -c "cd /home/node/app && npm install && npm start"
+    environment:
+      MONGO_URL: database
+      MONGO_USERNAME: root
+      MONGO_PASSWORD: password
+      MONGO_DB: bookclub
   database:
     image: mongo:latest
     restart: always
@@ -25,5 +30,3 @@ services:
       MONGO_INITDB_DATABASE: bookclub
     volumes:
       - ./database/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-volumes:
-  logvolume01: {}
