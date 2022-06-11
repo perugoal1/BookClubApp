@@ -1,0 +1,27 @@
+name: Frontend Code Quailty Check
+
+on:
+  push:
+    branches:
+      - master
+    # paths:
+    #   - 'frontend/**'
+
+jobs:
+  build:
+    name: Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14
+
+      - name: run CI
+        run: |
+          cd ./frontend
+          npm install # or yarn install
+          npm run lint:check # or yarn lint
+          npm run format:check # or yarn prettier
+          npm run build # or yarn build

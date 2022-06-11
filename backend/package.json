@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon ./bin/www --exec 'npm run lint:check && node'",
     "format:check": "prettier --check .",
-    "format:write": "prettier --write .",
+    "format:fix": "prettier --write .",
     "lint:check": "eslint .",
     "lint:fix": "eslint --fix ."
   },
