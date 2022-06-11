@@ -3,7 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www --exec 'npm run lint:check && node'",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint:check": "eslint .",
+    "lint:fix": "eslint --fix ."
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -15,6 +19,9 @@
     "morgan": "~1.9.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.16"
+    "eslint": "^8.17.0",
+    "eslint-config-prettier": "^8.5.0",
+    "nodemon": "^2.0.16",
+    "prettier": "^2.6.2"
   }
 }
