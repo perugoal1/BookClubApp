@@ -1,7 +1,7 @@
-db = db.getSiblingDB('bookclub_db');
+db = db.getSiblingDB('bookclub');
 db.users.insertOne(
     {
-        user: 'admin',
+        email: 'admin',
         password: 'password',
         roles: ['admin'],
     },

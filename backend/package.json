@@ -3,20 +3,26 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "start": "nodemon ./bin/www --exec 'npm run lint:check && node'",
+        "start": "nodemon ./bin/www",
         "format:check": "prettier --check .",
         "format:fix": "prettier --write .",
         "lint:check": "eslint .",
         "lint:fix": "eslint --fix ."
     },
     "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.20.0",
+        "connect-ensure-login": "^0.1.1",
         "cookie-parser": "~1.4.4",
         "debug": "~2.6.9",
         "ejs": "~2.6.1",
         "express": "~4.16.1",
+        "express-session": "^1.17.3",
         "http-errors": "~1.6.3",
         "mongoose": "^6.3.6",
-        "morgan": "~1.9.1"
+        "morgan": "~1.9.1",
+        "passport": "^0.6.0",
+        "passport-local": "^1.0.0"
     },
     "devDependencies": {
         "eslint": "^8.17.0",
