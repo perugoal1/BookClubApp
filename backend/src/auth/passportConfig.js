@@ -38,13 +38,13 @@ module.exports = (passport) => {
                     const user = await MakerChecker.create({
                         type: 'user',
                         action: 'create',
-                        primary_admin:  req.user.id,
+                        primary_admin: req.user.id,
                         data: {
                             email,
                             password,
                             ...req.body,
-                            ...extraAttributes
-                        }
+                            ...extraAttributes,
+                        },
                     });
                     return done(null, user);
                 } catch (error) {

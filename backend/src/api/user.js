@@ -10,7 +10,7 @@ const router = express.Router();
 /* GET users listing. */
 router.get('/:id', async (req, res) => {
     const userData = await User.findOne(
-        { _id : req.params.id },
+        { _id: req.params.id },
         { password: 0 }
     );
     res.send(userData);
@@ -33,12 +33,20 @@ router.post('/:id/update', async (req, res) => {
     }
 
     const userData = await User.findOne(
-        { _id : req.params.id },
+        { _id: req.params.id },
         { password: 0 }
     );
 
     // eslint-disable-next-line no-underscore-dangle
-    const values = { $set: { data, type: 'user', action: 'update', itemId: userData._id, primary_admin:  req.user.id, } };
+    const values = {
+        $set: {
+            data,
+            type: 'user',
+            action: 'update',
+            itemId: userData._id,
+            primary_admin: req.user.id,
+        },
+    };
     MakerChecker.findOneAndUpdate(
         { _id: req.params.id },
         values,
@@ -56,7 +64,14 @@ router.delete('/:id/delete', async (req, res) => {
         { password: 0 }
     );
 
-    const values = { $set: { type: 'user', action: 'delete', itemId: userData._id, primary_admin:  req.user.id,} };
+    const values = {
+        $set: {
+            type: 'user',
+            action: 'delete',
+            itemId: userData._id,
+            primary_admin: req.user.id,
+        },
+    };
     MakerChecker.findOneAndUpdate(
         { _id: req.params.id },
         values,
@@ -74,12 +89,19 @@ router.post('/:id/approveUser', async (req, res) => {
     if (req.user.role !== 'admin')
         return res.send('You are not authorized to perform this action');
 
-    const { action, data, itemId, primary_admin: primaryAdmin } = await MakerChecker.findById(req.params.id);
-    if(req.user.id === primaryAdmin.toString()) {
-        return res.send('You cannot approve the changes created by yourself. It requires approval from another admin.');
+    const {
+        action,
+        data,
+        itemId,
+        primary_admin: primaryAdmin,
+    } = await MakerChecker.findById(req.params.id);
+    if (req.user.id === primaryAdmin.toString()) {
+        return res.send(
+            'You cannot approve the changes created by yourself. It requires approval from another admin.'
+        );
     }
     console.log(111, action, data, itemId);
-    switch(action) {
+    switch (action) {
         case 'create':
             await User.create(data);
             await MakerChecker.deleteOne({ _id: req.params.id });
@@ -87,8 +109,8 @@ router.post('/:id/approveUser', async (req, res) => {
             break;
         case 'update':
             await User.findOneAndUpdate(
-                { _id : itemId },
-                { $set: { ...data }},
+                { _id: itemId },
+                { $set: { ...data } },
                 { upsert: true, new: true }
             );
             await MakerChecker.deleteOne({ _id: req.params.id });

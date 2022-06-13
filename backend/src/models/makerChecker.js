@@ -3,24 +3,26 @@ const bcrypt = require('bcryptjs');
 
 const { Schema } = mongoose;
 const MakerCheckerSchema = new Schema({
-    type: { // Its user now, addtional items can be added later like books
+    type: {
+        // Its user now, addtional items can be added later like books
         type: String,
         required: true,
     },
-    action: { // It can be create, delete or update
+    action: {
+        // It can be create, delete or update
         type: String,
         required: true,
     },
     data: {
         type: Schema.Types.Mixed,
     },
-    itemId : {
+    itemId: {
         type: mongoose.Schema.Types.ObjectId,
     },
-    primary_admin : {
+    primary_admin: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-    }
+    },
 });
 
 MakerCheckerSchema.pre('save', async function saveUser(next) {
@@ -40,6 +42,10 @@ MakerCheckerSchema.pre('save', async function saveUser(next) {
     }
 });
 
-const MakerCheckerModel = mongoose.model('makerChecker', MakerCheckerSchema, 'makerChecker');
+const MakerCheckerModel = mongoose.model(
+    'makerChecker',
+    MakerCheckerSchema,
+    'makerChecker'
+);
 
 module.exports = MakerCheckerModel;
