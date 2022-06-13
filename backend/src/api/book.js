@@ -30,7 +30,7 @@ router.post('/:id/update', (req, res) => {
     );
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id/delete', (req, res) => {
     Book.deleteOne({ _id: req.params.id }, (err) => {
         if (err) return err;
         res.send('User Deleted');

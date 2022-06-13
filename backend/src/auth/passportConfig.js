@@ -1,5 +1,6 @@
 const LocalStrategy = require('passport-local');
 const User = require('../models/user');
+const MakerChecker = require('../models/makerChecker');
 
 module.exports = (passport) => {
     passport.use(
@@ -30,15 +31,20 @@ module.exports = (passport) => {
                     }
                     // Create a new user with the user data provided
                     const extraAttributes = {
-                        approved: false,
-                        role: 'member',
+                        role: req.body.role || 'member',
                         date_joined: new Date(),
                     };
-                    const user = await User.create({
-                        email,
-                        password,
-                        ...req.body,
-                        ...extraAttributes,
+
+                    const user = await MakerChecker.create({
+                        type: 'user',
+                        action: 'create',
+                        primary_admin:  req.user.id,
+                        data: {
+                            email,
+                            password,
+                            ...req.body,
+                            ...extraAttributes
+                        }
                     });
                     return done(null, user);
                 } catch (error) {
@@ -73,7 +79,7 @@ module.exports = (passport) => {
 
     passport.serializeUser((user, cb) => {
         process.nextTick(() => {
-            cb(null, { id: user.id, username: user.email, role: user.role });
+            cb(null, { id: user.id, email: user.email, role: user.role });
         });
     });
 

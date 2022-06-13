@@ -15,10 +15,6 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
-    approved: {
-        type: Boolean,
-        required: true,
-    },
     role: {
         // can be 'admin', editor or 'member'
         type: String,
@@ -28,24 +24,6 @@ const UserSchema = new Schema({
         type: Date,
         required: true,
     },
-});
-
-UserSchema.pre('save', async function saveUser(next) {
-    try {
-        // check method of registration
-        const user = this;
-        if (!user.isModified('password')) next();
-        // generate salt
-        const salt = await bcrypt.genSalt(10);
-        // hash the password
-        const hashedPassword = await bcrypt.hash(this.password, salt);
-        // replace plain text password with hashed password
-        this.password = hashedPassword;
-        next();
-    } catch (error) {
-        console.log(21312);
-        return next(error);
-    }
 });
 
 UserSchema.methods.matchPassword = async function matchPassword(password) {

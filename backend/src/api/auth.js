@@ -12,8 +12,4 @@ router.post('/logout', (req, res) => {
     res.send('respond with a resource A');
 });
 
-router.post('/signup', passport.authenticate('local-signup'), (req, res) => {
-    res.send('Success');
-});
-
 module.exports = router;
