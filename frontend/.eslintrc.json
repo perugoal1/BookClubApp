@@ -27,12 +27,16 @@
     },
     "parser": "@typescript-eslint/parser",
     "rules": {
-     "linebreak-style": "off",
-     "prettier/prettier": [
-       "error",
-       {
-         "endOfLine": "auto"
-       }
-     ]
+          "default-param-last": 0,
+          "@typescript-eslint/default-param-last": 0,
+          "@typescript-eslint/ban-types": 0,
+          "@typescript-eslint/no-explicit-any": 0,
+          "linebreak-style": "off",
+          "prettier/prettier": [
+          "error",
+          {
+          "endOfLine": "auto"
+          }
+          ]
    }
 }

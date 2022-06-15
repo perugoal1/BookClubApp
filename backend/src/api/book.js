@@ -16,6 +16,26 @@ router.post('/create', async (req, res) => {
     res.send('Added Books');
 });
 
+router.post('/getAllBooks', async (req, res) => {
+    const { perPage = 10 , page = 0, searchText } = req.body;
+    let users;
+    if(searchText){
+        users = await Book.find({
+            "$or": [{
+                "title" : {$regex : searchText}
+            }, {
+                "description" : {$regex : searchText}
+            },
+            {
+                "author" : {$regex : searchText}
+            }
+        ]}).skip(perPage * page).limit(perPage);
+    } else {
+        users = await Book.find({}).skip(perPage * page).limit(perPage);
+    }
+    res.send(users);
+});
+
 router.post('/:id/update', (req, res) => {
     const data = req.body;
     const values = { $set: { ...data } };

@@ -5,6 +5,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const passport = require('passport');
+const cors = require('cors')
 
 const initMongoose = require('./src/models/mongoConfig');
 const passportConfig = require('./src/auth/passportConfig');
@@ -12,6 +13,7 @@ const initApiRoutes = require('./src/api/index');
 
 const app = express();
 
+app.use(cors());
 app.use(
     session({
         secret: 'r8q,+&1LM3)CD*zAGpx1xm{NeQhc;#',

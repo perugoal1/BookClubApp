@@ -5,6 +5,7 @@ const passport = require('passport');
 const User = require('../models/user');
 const MakerChecker = require('../models/makerChecker');
 
+
 const router = express.Router();
 
 /* GET users listing. */
@@ -18,6 +19,24 @@ router.get('/:id', async (req, res) => {
 
 router.post('/create', passport.authenticate('local-signup'), (req, res) => {
     res.send('Success');
+});
+
+
+router.post('/getAllUsers', async (req, res) => {
+    const { perPage = 10 , page = 0, searchText } = req.body;
+    let users;
+    if(searchText){
+        users = await User.find({
+            "$or": [{
+                "name" : {$regex : searchText}
+            }, {
+                "email" : {$regex : searchText}
+            }
+        ]},  { password: 0 }).skip(perPage * page).limit(perPage);
+    } else {
+        users = await User.find({},  { password: 0 }).skip(perPage * page).limit(perPage);
+    }
+    res.send(users);
 });
 
 router.post('/:id/update', async (req, res) => {
