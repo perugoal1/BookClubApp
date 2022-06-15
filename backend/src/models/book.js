@@ -19,11 +19,11 @@ const UserSchema = new Schema({
         required: true,
     },
     published_year: {
-        type: Date,
+        type: Number,
         required: true,
     },
     availability: {
-        type: Number,
+        type: Boolean,
         required: true,
     },
     last_borrower: {

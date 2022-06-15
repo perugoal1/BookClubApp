@@ -5,6 +5,7 @@ const { baseUrl } = config;
 
 export default axios.create({
     baseURL: baseUrl,
+    withCredentials: true,
     headers: {
         'Content-type': 'application/json',
     },

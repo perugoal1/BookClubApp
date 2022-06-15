@@ -13,7 +13,13 @@ const initApiRoutes = require('./src/api/index');
 
 const app = express();
 
-app.use(cors());
+app.use(
+    cors({
+        origin: 'http://localhost:3000',
+        methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
+        credentials: true,
+    })
+);
 app.use(
     session({
         secret: 'r8q,+&1LM3)CD*zAGpx1xm{NeQhc;#',

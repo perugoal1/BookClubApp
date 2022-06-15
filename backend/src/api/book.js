@@ -5,7 +5,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/:id', async (req, res) => {
-    const userData = await Book.findOne({ title: req.params.id });
+    const userData = await Book.findOne({ _id: req.params.id });
     res.send(userData);
 });
 
@@ -20,25 +20,46 @@ router.post('/getAllBooks', async (req, res) => {
     const { perPage = 10, page = 0, searchText } = req.body;
     let users;
     if (searchText) {
-        users = await Book.find({
-            $or: [
-                {
-                    title: { $regex: searchText },
-                },
-                {
-                    description: { $regex: searchText },
-                },
-                {
-                    author: { $regex: searchText },
-                },
-            ],
-        })
-            .skip(perPage * page)
-            .limit(perPage);
+        if (perPage) {
+            users = await Book.find({
+                $or: [
+                    {
+                        title: { $regex: searchText },
+                    },
+                    {
+                        description: { $regex: searchText },
+                    },
+                    {
+                        author: { $regex: searchText },
+                    },
+                ],
+            })
+                .skip(perPage * page)
+                .limit(perPage);
+        } else {
+            users = await Book.find({
+                $or: [
+                    {
+                        title: { $regex: searchText },
+                    },
+                    {
+                        description: { $regex: searchText },
+                    },
+                    {
+                        author: { $regex: searchText },
+                    },
+                ],
+            });
+        }
     } else {
-        users = await Book.find({})
-            .skip(perPage * page)
-            .limit(perPage);
+        // eslint-disable-next-line no-lonely-if
+        if (perPage) {
+            users = await Book.find({})
+                .skip(perPage * page)
+                .limit(perPage);
+        } else {
+            users = await Book.find({});
+        }
     }
     res.send(users);
 });
@@ -67,10 +88,10 @@ router.delete('/:id/delete', (req, res) => {
 router.post('/:id/borrow', async (req, res) => {
     if (!req.user) return res.send('You are not logged in.');
     const bookData = await Book.findOne({ _id: req.params.id });
-    if (bookData.availability === 0) {
+    if (!bookData.availability) {
         return res.send('Book is not available'); // book is not available
     }
-    bookData.availability -= 1;
+    bookData.availability = false;
     if (bookData.current_borrower) {
         if (req.user.id === bookData.current_borrower.toString())
             return res.send('You have already borrowed this book.'); // user has already borrowed this book
@@ -84,7 +105,7 @@ router.post('/:id/borrow', async (req, res) => {
 router.post('/:id/return', async (req, res) => {
     if (!req.user) return res.send('You are not logged in.');
     const bookData = await Book.findOne({ _id: req.params.id });
-    bookData.availability += 1;
+    bookData.availability = true;
     if (!bookData.current_borrower)
         return res.send('You have not borrowed this book.'); // user has not borrowed this book
     if (bookData.current_borrower) {

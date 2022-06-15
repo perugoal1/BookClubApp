@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-    Navbar,
-    Container,
-    Nav,
-    Form,
-    FormControl,
-    Button,
-    DropdownButton,
-    Dropdown,
-} from 'react-bootstrap';
+import { Navbar, Container, Nav, Button, NavDropdown } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -43,7 +34,7 @@ function Header() {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link></Nav.Link>
+                        <Nav.Link href="/home">Search Books</Nav.Link>
                         {online && isAdmin && (
                             <Nav.Link href="#action1">Book Management</Nav.Link>
                         )}
@@ -51,29 +42,23 @@ function Header() {
                             <Nav.Link href="#action2">User Management</Nav.Link>
                         )}
                     </Nav>
-                    <Form className="d-flex mx-5 ">
-                        <FormControl
-                            type="search"
-                            placeholder="Search for books"
-                            className="me-2"
-                            aria-label="Search"
-                        />
-                        <Button variant="light">Search</Button>
-                    </Form>
-                    {online ? (
-                        <DropdownButton
-                            id="dropdown-basic-button"
-                            title="User Logged In"
-                        >
-                            <Dropdown.Item onClick={logoutAction}>
-                                Logout
-                            </Dropdown.Item>
-                        </DropdownButton>
-                    ) : (
-                        <Button href="/" variant="primary">
-                            Login
-                        </Button>
-                    )}
+                    <Nav>
+                        {online ? (
+                            <NavDropdown
+                                title="User Logged In"
+                                id="collasible-nav-dropdown"
+                            >
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item onClick={logoutAction}>
+                                    Logout
+                                </NavDropdown.Item>
+                            </NavDropdown>
+                        ) : (
+                            <Button href="/" variant="primary">
+                                Login
+                            </Button>
+                        )}
+                    </Nav>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
