@@ -2,7 +2,7 @@ import { LOGIN, LOGOUT } from '../actions/types';
 
 const initialState = {
     online: false,
-    data: {}
+    data: {},
 };
 
 const authReducer = (state = initialState, action) => {

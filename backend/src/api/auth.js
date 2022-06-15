@@ -5,8 +5,8 @@ const router = express.Router();
 
 /* GET home page. */
 router.post('/login', passport.authenticate('local-login'), (req, res) => {
-    const data =  {...req.user._doc}
-    delete data.password; 
+    const data = { ...req.user._doc };
+    delete data.password;
     res.send(data);
 });
 

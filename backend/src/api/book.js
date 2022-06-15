@@ -17,21 +17,28 @@ router.post('/create', async (req, res) => {
 });
 
 router.post('/getAllBooks', async (req, res) => {
-    const { perPage = 10 , page = 0, searchText } = req.body;
+    const { perPage = 10, page = 0, searchText } = req.body;
     let users;
-    if(searchText){
+    if (searchText) {
         users = await Book.find({
-            "$or": [{
-                "title" : {$regex : searchText}
-            }, {
-                "description" : {$regex : searchText}
-            },
-            {
-                "author" : {$regex : searchText}
-            }
-        ]}).skip(perPage * page).limit(perPage);
+            $or: [
+                {
+                    title: { $regex: searchText },
+                },
+                {
+                    description: { $regex: searchText },
+                },
+                {
+                    author: { $regex: searchText },
+                },
+            ],
+        })
+            .skip(perPage * page)
+            .limit(perPage);
     } else {
-        users = await Book.find({}).skip(perPage * page).limit(perPage);
+        users = await Book.find({})
+            .skip(perPage * page)
+            .limit(perPage);
     }
     res.send(users);
 });

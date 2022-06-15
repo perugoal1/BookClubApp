@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     Form,
     Button,
@@ -9,7 +9,7 @@ import {
     ToastContainer,
 } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 import { login } from '../../actions/auth';
 
@@ -24,12 +24,12 @@ function Login() {
     const navigate = useNavigate();
 
     const handleEmailChange = (event) => {
-        const { name, value } = event.target;
+        const { value } = event.target;
         setEmail(value);
     };
 
     const handlePasswordChange = (event) => {
-        const { name, value } = event.target;
+        const { value } = event.target;
         setPassword(value);
     };
 
@@ -39,7 +39,7 @@ function Login() {
                 setShowSuccess(true);
                 setTimeout(() => {
                     navigate(`/home`);
-                }, 1000);   
+                }, 1000);
             })
             .catch((e) => {
                 setShow(true);
@@ -87,7 +87,6 @@ function Login() {
                     delay={2000}
                     autohide
                     bg="danger"
-                    
                 >
                     <Toast.Header>
                         <img className="rounded me-2" alt="" />
@@ -106,14 +105,13 @@ function Login() {
                     delay={2000}
                     autohide
                     bg="success"
-                    
                 >
                     <Toast.Header>
                         <img className="rounded me-2" alt="" />
                         <strong className="me-auto">Login Succesful</strong>
                     </Toast.Header>
                     <Toast.Body className="text-white">
-                       User Logged in Successfully
+                        User Logged in Successfully
                     </Toast.Body>
                 </Toast>
             </ToastContainer>

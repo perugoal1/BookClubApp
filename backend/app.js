@@ -5,7 +5,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const passport = require('passport');
-const cors = require('cors')
+const cors = require('cors');
 
 const initMongoose = require('./src/models/mongoConfig');
 const passportConfig = require('./src/auth/passportConfig');

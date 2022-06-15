@@ -11,11 +11,9 @@ const login = (email: string, password: string) => {
     });
 };
 
-const logout = (email: string, password: string) => {
+const logout = () => {
     return http.post('/auth/logout');
 };
-
-
 
 const apiService = {
     getBookDetails,

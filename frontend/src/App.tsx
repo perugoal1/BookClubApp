@@ -20,8 +20,8 @@ function App() {
                         </div>
                     }
                 />
-               
-                <Route path="/home" element={ <BookList />}/>
+
+                <Route path="/home" element={<BookList />} />
             </Routes>
         </div>
     );

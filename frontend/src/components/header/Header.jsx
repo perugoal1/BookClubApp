@@ -6,12 +6,11 @@ import {
     Form,
     FormControl,
     Button,
-    NavDropdown,
     DropdownButton,
-    Dropdown
+    Dropdown,
 } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 import useUserStatus from '../../hooks/auth';
 import { logout } from '../../actions/auth';
@@ -19,17 +18,18 @@ import { logout } from '../../actions/auth';
 function Header() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+
     const { online, data } = useUserStatus();
-    const isAdmin = data && data.role === 'admin' ? true: false;
+    const isAdmin = data && data.role === 'admin' ? true : false;
 
     const logoutAction = () => {
-        dispatch(logout()) .then(() => {
-            navigate(`/`);  
-        })
-        .catch((e) => {
-            console.log(e);
-        });
+        dispatch(logout())
+            .then(() => {
+                navigate(`/`);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
     };
 
     return (
@@ -60,15 +60,20 @@ function Header() {
                         />
                         <Button variant="light">Search</Button>
                     </Form>
-                    {online ? (    
-                        <DropdownButton id="dropdown-basic-button" title="User Logged In">
-                            <Dropdown.Item onClick={logoutAction}>Logout</Dropdown.Item>
+                    {online ? (
+                        <DropdownButton
+                            id="dropdown-basic-button"
+                            title="User Logged In"
+                        >
+                            <Dropdown.Item onClick={logoutAction}>
+                                Logout
+                            </Dropdown.Item>
                         </DropdownButton>
-                     ) : (
-                        <Button href="/" variant="primary" >
+                    ) : (
+                        <Button href="/" variant="primary">
                             Login
                         </Button>
-                     )}
+                    )}
                 </Navbar.Collapse>
             </Container>
         </Navbar>

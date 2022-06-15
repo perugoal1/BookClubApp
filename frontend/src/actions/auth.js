@@ -14,7 +14,7 @@ export const login = (email, password) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
     try {
-        const res = await apiService.logout();
+        await apiService.logout();
         dispatch({ type: LOGOUT });
         return await Promise.resolve('Logged out');
     } catch (err) {

@@ -1,4 +1,4 @@
-import { GET_BOOK, GET_ALL_BOOK } from './types';
+import { GET_ALL_BOOK } from './types';
 
 import apiService from '../services/apiService';
 
