@@ -1,6 +1,7 @@
 import {
     GET_ALL_BOOK,
     GET_BOOK,
+    CREATE_BOOK,
     UPDATE_BOOK,
     DELETE_BOOK,
     BORROW_BOOK,
@@ -23,6 +24,16 @@ export const getAllBookDetails = (text) => async (dispatch) => {
     try {
         const res = await apiService.getAllBookDetails(text);
         dispatch({ type: GET_ALL_BOOK, books: res.data });
+        return await Promise.resolve(res.data);
+    } catch (err) {
+        return Promise.reject(err);
+    }
+};
+
+export const createBook = (data) => async (dispatch) => {
+    try {
+        const res = await apiService.createBook(data);
+        dispatch({ type: CREATE_BOOK, book: res.data });
         return await Promise.resolve(res.data);
     } catch (err) {
         return Promise.reject(err);

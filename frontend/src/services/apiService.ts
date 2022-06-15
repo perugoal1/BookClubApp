@@ -21,6 +21,10 @@ const getBookDetails = (id: string) => {
     return http.get(`/book/${id}`);
 };
 
+const createBook = (data: any) => {
+    return http.post(`/book/create`, data);
+};
+
 const updateBook = (id: string, data: any) => {
     return http.post(`/book/${id}/update`, data);
 };
@@ -40,6 +44,7 @@ const returnBook = (id: string) => {
 const apiService = {
     getBookDetails,
     getAllBookDetails,
+    createBook,
     updateBook,
     deleteBook,
     borrowBook,

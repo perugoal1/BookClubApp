@@ -1,6 +1,7 @@
 import {
     GET_ALL_BOOK,
     GET_BOOK,
+    CREATE_BOOK,
     UPDATE_BOOK,
     DELETE_BOOK,
     BORROW_BOOK,
@@ -18,6 +19,8 @@ const bookReducer = (state = initialState, action) => {
             return { ...state, book: action.book };
         case GET_ALL_BOOK:
             return { ...state, books: action.books };
+        case CREATE_BOOK:
+            return { ...state, book: action.book };
         case UPDATE_BOOK:
             return { ...state, book: action.book };
         case DELETE_BOOK:

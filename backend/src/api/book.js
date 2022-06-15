@@ -10,14 +10,20 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/create', async (req, res) => {
-    await req.body.copies.forEach(async () => {
-        await Book.create(req.body);
-    });
+
+    const booksToCreate= [];
+    console.log(11111, req.body.copies);
+    for (let x = 0; x < req.body.copies; x += 1) {
+        console.log(66666);
+        booksToCreate.push(Book.create({...req.body, availability: true}));
+    }
+    await Promise.all(booksToCreate);
+    console.log(5555);
     res.send('Added Books');
 });
 
 router.post('/getAllBooks', async (req, res) => {
-    const { perPage = 10, page = 0, searchText } = req.body;
+    const { perPage, page, searchText } = req.body;
     let users;
     if (searchText) {
         if (perPage) {

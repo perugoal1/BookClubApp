@@ -173,6 +173,8 @@ const BookList = () => {
 
     const [rowData, setRowData] = useState([]);
     const [adminShow, setAdminShow] = useState(false);
+    const [create, setCreate] = useState(false);
+    
     const [id, setId] = useState('');
 
     const { online, data } = useUserStatus();
@@ -186,6 +188,12 @@ const BookList = () => {
             .catch((e) => {
                 console.log(e);
             });
+    };
+
+    const createBookModel = () => {
+        setAdminShow(true);
+        setId();
+        setCreate(true);
     };
 
     const columns = [
@@ -204,7 +212,7 @@ const BookList = () => {
         });
     }
 
-    if (data.role === 'admin') {
+    if (data.role === 'admin' || data.role === 'editor') {
         columns.push({
             field: 'admin_actions',
             headerName: 'Admin Actions',
@@ -239,6 +247,11 @@ const BookList = () => {
                     </Button>
                 </InputGroup>
 
+                {(data.role === 'admin' || data.role === 'editor') && 
+                    <div>
+                         <Button variant="primary" onClick={createBookModel}>Add New Book</Button>
+                    </div>
+                }
                 <div
                     className="ag-theme-alpine my-5"
                     style={{ width: '100%', height: '500px' }}
@@ -255,6 +268,8 @@ const BookList = () => {
                 handleClose={setAdminShow}
                 id={id}
                 searchAction={searchAction}
+                create={create}
+                setCreate={setCreate}
             />
         </Container>
     );
