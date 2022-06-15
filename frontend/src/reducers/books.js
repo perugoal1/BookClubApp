@@ -1,11 +1,8 @@
-import {
-    GET_ALL_BOOK,
-} from "../actions/types";
+import { GET_ALL_BOOK } from '../actions/types';
 
 const initialState = {
-    books: []
+    books: [],
 };
-
 
 const bookReducer = (state = initialState, action) => {
     switch (action.type) {

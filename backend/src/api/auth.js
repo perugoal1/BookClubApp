@@ -5,11 +5,14 @@ const router = express.Router();
 
 /* GET home page. */
 router.post('/login', passport.authenticate('local-login'), (req, res) => {
-    res.send('Success');
+    const data =  {...req.user._doc}
+    delete data.password; 
+    res.send(data);
 });
 
 router.post('/logout', (req, res) => {
-    res.send('respond with a resource A');
+    req.session.destroy();
+    res.send('Logged out successfully.');
 });
 
 module.exports = router;

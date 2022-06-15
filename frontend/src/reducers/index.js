@@ -4,5 +4,5 @@ import bookReducer from './books';
 
 export default combineReducers({
     authReducer,
-    bookReducer
+    bookReducer,
 });

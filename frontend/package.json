@@ -10,6 +10,8 @@
     "@types/node": "^16.11.39",
     "@types/react": "^18.0.12",
     "@types/react-dom": "^18.0.5",
+    "ag-grid-community": "^27.0.1",
+    "ag-grid-react": "^27.0.1",
     "autoprefixer": "^10.4.5",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.0-beta1",
@@ -30,10 +32,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "format:check": "prettier --check src/**/*.ts{,x}",
-    "format:fix": "prettier --write src/**/*.ts{,x}",
-    "lint:check": "tsc --noEmit && eslint src/**/*.ts{,x}",
-    "lint:fix": "tsc --noEmit && eslint --fix src/**/*.ts{,x}"
+    "format:check": "prettier --check src/**/*.{js,jsx,ts,tsx}",
+    "format:fix": "prettier --write src/**/*.{js,jsx,ts,tsx}",
+    "lint:check": "tsc --noEmit && eslint src/**/*.{js,jsx,ts,tsx}",
+    "lint:fix": "tsc --noEmit && eslint --fix src/**/*.{js,jsx,ts,tsx}"
   },
   "eslintConfig": {
     "extends": [

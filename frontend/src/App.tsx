@@ -17,16 +17,11 @@ function App() {
                     element={
                         <div>
                             <Login />
-                            <BookList />
                         </div>
                     }
                 />
-                {/* <Route path="/about">
-                    <About />
-                </Route>
-                <Route path="/dashboard">
-                    <Dashboard />
-                </Route> */}
+               
+                <Route path="/home" element={ <BookList />}/>
             </Routes>
         </div>
     );

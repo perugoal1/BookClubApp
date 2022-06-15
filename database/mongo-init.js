@@ -3,7 +3,7 @@ db.users.insertOne(
     {
         email: 'admin',
         password: '$2a$10$K8rFZA4IcBbJoXAa91dURepBNgifrZQkA3UUkjAXf.ozDUcmthX1q', //password
-        roles: 'admin',
+        role: 'admin',
     },
 );
 

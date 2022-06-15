@@ -1,19 +1,28 @@
-import React, {useState, useEffect} from 'react';
-import { Form, Button, Container, Row, Col, Toast, ToastHeader, ToastBody  } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import {
+    Form,
+    Button,
+    Container,
+    Row,
+    Col,
+    Toast,
+    ToastContainer,
+} from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 
 import { login } from '../../actions/auth';
-import useUserStatus from '../../hooks/auth';
 
 function Login() {
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const [show, setShow] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
 
     const dispatch = useDispatch();
-    
+    const navigate = useNavigate();
+
     const handleEmailChange = (event) => {
         const { name, value } = event.target;
         setEmail(value);
@@ -26,18 +35,17 @@ function Login() {
 
     const loginAction = () => {
         dispatch(login(email, password))
-            .then(data => {
-                console.log(data);
+            .then(() => {
+                setShowSuccess(true);
+                setTimeout(() => {
+                    navigate(`/home`);
+                }, 1000);   
             })
-            .catch(e => {
-                setShow(true)
+            .catch((e) => {
+                setShow(true);
                 console.log(e);
-        });
-    }
-
-    // const auth = useSelector((state) => state.authReducer);
-    const isOnline = useUserStatus();
-    console.log(2222, isOnline);
+            });
+    };
 
     return (
         <Container className="mt30">
@@ -72,15 +80,43 @@ function Login() {
                 </Col>
             </Row>
 
+            <ToastContainer className="p-3" position="bottom-center">
+                <Toast
+                    onClose={() => setShow(false)}
+                    show={show}
+                    delay={2000}
+                    autohide
+                    bg="danger"
+                    
+                >
+                    <Toast.Header>
+                        <img className="rounded me-2" alt="" />
+                        <strong className="me-auto">Login Failed</strong>
+                    </Toast.Header>
+                    <Toast.Body className="text-white">
+                        Username / Password is incorrect.
+                    </Toast.Body>
+                </Toast>
+            </ToastContainer>
 
-
-        <Toast onClose={() => setShow(false)} show={show} delay={1000} autohide bg="danger">
-            <Toast.Header>
-                <img className="rounded me-2" alt="" />
-                <strong className="me-auto">Login Failed</strong>
-            </Toast.Header>
-            <Toast.Body className="text-white">Username / Password is incorrect.</Toast.Body>
-        </Toast>    
+            <ToastContainer className="p-3" position="bottom-center">
+                <Toast
+                    onClose={() => setShowSuccess(false)}
+                    show={showSuccess}
+                    delay={2000}
+                    autohide
+                    bg="success"
+                    
+                >
+                    <Toast.Header>
+                        <img className="rounded me-2" alt="" />
+                        <strong className="me-auto">Login Succesful</strong>
+                    </Toast.Header>
+                    <Toast.Body className="text-white">
+                       User Logged in Successfully
+                    </Toast.Body>
+                </Toast>
+            </ToastContainer>
         </Container>
     );
 }
