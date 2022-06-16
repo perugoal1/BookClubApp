@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navbar, Container, Nav, Button, NavDropdown } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { useNavigate , Link} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import useUserStatus from '../../hooks/auth';
 import { logout } from '../../actions/auth';
@@ -34,13 +34,19 @@ function Header() {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link onClick={()=> navigate(`/home`)} >Search Books</Nav.Link>
+                        <Nav.Link onClick={() => navigate(`/book-management`)}>
+                            Book Management
+                        </Nav.Link>
                         {online && isAdmin && (
-                            <Nav.Link href="#action1">Book Management</Nav.Link>
+                            <Nav.Link
+                                onClick={() => navigate(`/user-management`)}
+                            >
+                                User Management
+                            </Nav.Link>
                         )}
-                        {online && isAdmin && (
-                            <Nav.Link href="#action2">User Management</Nav.Link>
-                        )}
+                        <Nav.Link onClick={() => navigate(`/analytics`)}>
+                            Analytics{' '}
+                        </Nav.Link>
                     </Nav>
                     <Nav>
                         {online ? (
@@ -54,7 +60,10 @@ function Header() {
                                 </NavDropdown.Item>
                             </NavDropdown>
                         ) : (
-                            <Button onClick={()=> navigate(`/`) } variant="primary">
+                            <Button
+                                onClick={() => navigate(`/`)}
+                                variant="primary"
+                            >
                                 Login
                             </Button>
                         )}

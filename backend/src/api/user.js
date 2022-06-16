@@ -1,5 +1,4 @@
 const express = require('express');
-const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
 const User = require('../models/user');
@@ -9,10 +8,13 @@ const router = express.Router();
 
 /* GET users listing. */
 router.get('/:id', async (req, res) => {
-    const userData = await User.findOne(
-        { _id: req.params.id },
-        { password: 0 }
-    );
+    if (!req.user) return res.send('You are not logged in.');
+
+    let opts = { password: 0 };
+    if (req.user.role === 'admin') {
+        opts = {};
+    }
+    const userData = await User.findOne({ _id: req.params.id }, { ...opts });
     res.send(userData);
 });
 
@@ -20,8 +22,21 @@ router.post('/create', passport.authenticate('local-signup'), (req, res) => {
     res.send('Success');
 });
 
+router.post('/getApprovalList', async (req, res) => {
+    const aprovalList = await MakerChecker.find({
+        primary_admin: { $ne: req.user.id },
+    });
+    res.send(aprovalList);
+});
+
+router.get('/getApprovalDetails/:id', async (req, res) => {
+    if (!req.user) return res.send('You are not logged in.');
+    const userData = await MakerChecker.findOne({ _id: req.params.id });
+    res.send(userData);
+});
+
 router.post('/getAllUsers', async (req, res) => {
-    const { perPage = 10, page = 0, searchText } = req.body;
+    const { perPage, page, searchText } = req.body;
     let users;
     if (searchText) {
         users = await User.find(
@@ -52,12 +67,13 @@ router.post('/:id/update', async (req, res) => {
     if (req.user.role !== 'admin')
         return res.send('You are not authorized to perform this action');
     const data = { ...req.body };
-    if (data.email) res.send('Email field not editable');
-    if (data.password) {
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(data.password, salt);
-        data.password = hashedPassword;
-    }
+    // if (data.email) res.send('Email field not editable');
+    delete data.password;
+    // if (data.password) {
+    //     const salt = await bcrypt.genSalt(10);
+    //     const hashedPassword = await bcrypt.hash(data.password, salt);
+    //     data.password = hashedPassword;
+    // }
 
     const userData = await User.findOne(
         { _id: req.params.id },
@@ -127,7 +143,6 @@ router.post('/:id/approveUser', async (req, res) => {
             'You cannot approve the changes created by yourself. It requires approval from another admin.'
         );
     }
-    console.log(111, action, data, itemId);
     switch (action) {
         case 'create':
             await User.create(data);

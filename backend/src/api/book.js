@@ -10,12 +10,11 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/create', async (req, res) => {
-
-    const booksToCreate= [];
+    const booksToCreate = [];
     console.log(11111, req.body.copies);
     for (let x = 0; x < req.body.copies; x += 1) {
         console.log(66666);
-        booksToCreate.push(Book.create({...req.body, availability: true}));
+        booksToCreate.push(Book.create({ ...req.body, availability: true }));
     }
     await Promise.all(booksToCreate);
     console.log(5555);

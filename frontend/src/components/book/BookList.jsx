@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { AgGridReact } from 'ag-grid-react';
 import {
@@ -174,7 +174,7 @@ const BookList = () => {
     const [rowData, setRowData] = useState([]);
     const [adminShow, setAdminShow] = useState(false);
     const [create, setCreate] = useState(false);
-    
+
     const [id, setId] = useState('');
 
     const { online, data } = useUserStatus();
@@ -197,11 +197,19 @@ const BookList = () => {
     };
 
     const columns = [
-        { field: 'title', cellRenderer: titleRenderer },
-        { field: 'description' },
-        { field: 'genre', cellRenderer: genreRenderer },
-        { field: 'author' },
-        { field: 'published_year', headerName: 'Published Year' },
+        { field: 'title', cellRenderer: titleRenderer, sort: 'asc' },
+        { field: 'description', filter: 'agTextColumnFilter' },
+        {
+            field: 'genre',
+            cellRenderer: genreRenderer,
+            filter: 'agTextColumnFilter',
+        },
+        { field: 'author', filter: 'agTextColumnFilter' },
+        {
+            field: 'published_year',
+            headerName: 'Published Year',
+            filter: 'agNumberColumnFilter',
+        },
     ];
 
     if (online) {
@@ -222,6 +230,12 @@ const BookList = () => {
     }
 
     const [columnDefs] = useState(columns);
+
+    const defaultColDef = useMemo(() => {
+        return {
+            sortable: true,
+        };
+    }, []);
 
     const searchTextChange = (event) => {
         const { value } = event.target;
@@ -247,11 +261,13 @@ const BookList = () => {
                     </Button>
                 </InputGroup>
 
-                {(data.role === 'admin' || data.role === 'editor') && 
+                {(data.role === 'admin' || data.role === 'editor') && (
                     <div>
-                         <Button variant="primary" onClick={createBookModel}>Add New Book</Button>
+                        <Button variant="primary" onClick={createBookModel}>
+                            Add New Book
+                        </Button>
                     </div>
-                }
+                )}
                 <div
                     className="ag-theme-alpine my-5"
                     style={{ width: '100%', height: '500px' }}
@@ -259,6 +275,7 @@ const BookList = () => {
                     <AgGridReact
                         rowData={rowData}
                         columnDefs={columnDefs}
+                        defaultColDef={defaultColDef}
                         pagination={true}
                     ></AgGridReact>
                 </div>

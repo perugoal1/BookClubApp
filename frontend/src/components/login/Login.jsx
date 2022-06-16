@@ -38,7 +38,7 @@ function Login() {
             .then(() => {
                 setShowSuccess(true);
                 setTimeout(() => {
-                    navigate(`/home`);
+                    navigate(`/book-management`);
                 }, 1000);
             })
             .catch((e) => {

@@ -33,6 +33,7 @@
           "@typescript-eslint/no-explicit-any": 0,
           "@typescript-eslint/no-shadow": 0,
           "react-hooks/rules-of-hooks": 0,
+          "react-hooks/exhaustive-deps": 0,
           "linebreak-style": "off",
           "prettier/prettier": [
           "error",

@@ -1,5 +1,4 @@
 import { LOGIN, LOGOUT } from '../actions/types';
-
 import apiService from '../services/apiService';
 
 export const login = (email, password) => async (dispatch) => {

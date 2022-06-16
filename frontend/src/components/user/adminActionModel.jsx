@@ -5,14 +5,14 @@ import { useDispatch } from 'react-redux';
 import { InputGroup, Form, ToastContainer, Toast } from 'react-bootstrap';
 
 import {
-    getBookDetails,
-    createBook,
-    updateBook,
-    deleteBook,
-} from '../../actions/books';
+    getUserDetails,
+    createUser,
+    updateUser,
+    deleteUser,
+} from '../../actions/users';
 
 function AdminAction(props) {
-    const [book, setBook] = useState({});
+    const [user, setUser] = useState({});
     const [showSuccess, setShowSuccess] = useState(false);
     const [succesText, setSuccesText] = useState('');
 
@@ -20,30 +20,28 @@ function AdminAction(props) {
 
     useEffect(() => {
         if (props.id) {
-            dispatch(getBookDetails(props.id))
+            dispatch(getUserDetails(props.id))
                 .then((data) => {
-                    setBook(data);
+                    setUser(data);
                 })
                 .catch((e) => {
                     console.log(e);
                 });
         }
-    }, [props, dispatch]);
+    }, [props.id]);
 
-    const handleBookDetailsChange = (event, key) => {
+    const handleUserDetailsChange = (event, key) => {
         let { value } = event.target;
-        if (key === 'genre') {
-            value = value.split(',');
-        }
-        setBook({ ...book, [key]: value });
+        setUser({ ...user, [key]: value });
     };
 
-    const CreateBookAction = () => {
+    const CreateUserAction = () => {
         setSuccesText('Create');
-        dispatch(createBook(book))
+        dispatch(createUser(user))
             .then(() => {
                 setShowSuccess(true);
                 props.searchAction();
+                props.getApprovalAction();
                 setTimeout(() => {
                     props.setCreate(false);
                     props.handleClose(false);
@@ -54,12 +52,13 @@ function AdminAction(props) {
             });
     };
 
-    const updateBookAction = () => {
+    const updateUserAction = () => {
         setSuccesText('Update');
-        dispatch(updateBook(props.id, book))
+        dispatch(updateUser(props.id, user))
             .then(() => {
                 setShowSuccess(true);
                 props.searchAction();
+                props.getApprovalAction();
                 setTimeout(() => {
                     props.setCreate(false);
                     props.handleClose(false);
@@ -70,12 +69,13 @@ function AdminAction(props) {
             });
     };
 
-    const deleteBookAction = () => {
+    const deleteUserAction = () => {
         setSuccesText('Delete');
-        dispatch(deleteBook(props.id))
+        dispatch(deleteUser(props.id))
             .then(() => {
                 setShowSuccess(true);
                 props.searchAction();
+                props.getApprovalAction();
                 setTimeout(() => {
                     props.setCreate(false);
                     props.handleClose(false);
@@ -98,101 +98,69 @@ function AdminAction(props) {
                 keyboard={false}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>{book.title}</Modal.Title>
+                    <Modal.Title>{user.name}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <InputGroup className="mb-3">
                         <InputGroup.Text id="basic-addon1">
-                            Title
+                            Name
                         </InputGroup.Text>
                         <Form.Control
-                            placeholder="Title"
-                            aria-label="Title"
+                            placeholder="Name"
+                            aria-label="Name"
                             aria-describedby="basic-addon1"
-                            value={book.title}
+                            value={user.name}
                             onChange={(e) => {
-                                handleBookDetailsChange(e, 'title');
-                            }}
-                        />
-                    </InputGroup>
-
-                    <InputGroup className="mb-3">
-                        <InputGroup.Text>Description</InputGroup.Text>
-                        <Form.Control
-                            as="textarea"
-                            aria-label="Description"
-                            placeholder="Description"
-                            value={book.description}
-                            onChange={(e) => {
-                                handleBookDetailsChange(e, 'description');
+                                handleUserDetailsChange(e, 'name');
                             }}
                         />
                     </InputGroup>
 
                     <InputGroup className="mb-3">
                         <InputGroup.Text id="basic-addon2">
-                            Author
+                            Email ID
                         </InputGroup.Text>
                         <Form.Control
-                            placeholder="Author"
-                            aria-label="Author"
+                            placeholder="Email"
+                            aria-label="Email"
                             aria-describedby="basic-addon2"
-                            value={book.author}
+                            value={user.email}
                             onChange={(e) => {
-                                handleBookDetailsChange(e, 'author');
+                                handleUserDetailsChange(e, 'email');
                             }}
                         />
                     </InputGroup>
 
                     <InputGroup className="mb-3">
                         <InputGroup.Text id="basic-addon3">
-                            Published Year
+                            Role
                         </InputGroup.Text>
                         <Form.Control
-                            placeholder="Published Year"
-                            aria-label="Published Year"
+                            placeholder="Role"
+                            aria-label="Role"
                             aria-describedby="basic-addon3"
-                            type="number"
-                            value={book.published_year}
+                            value={user.role}
                             onChange={(e) => {
-                                handleBookDetailsChange(e, 'published_year');
+                                handleUserDetailsChange(e, 'role');
                             }}
                         />
                     </InputGroup>
-
-                    <InputGroup className="mb-3">
-                        <InputGroup.Text id="basic-addon4">
-                            Genre
-                        </InputGroup.Text>
-                        <Form.Control
-                            placeholder="Enter Genre as comma separated values"
-                            aria-label="Genre"
-                            aria-describedby="basic-addon4"
-                            type="text"
-                            value={(() => {
-                                return book.genre ? book.genre.join(',') : '';
-                            })()}
-                            onChange={(e) => {
-                                handleBookDetailsChange(e, 'genre');
-                            }}
-                        />
-                    </InputGroup>
-
-                    <InputGroup className="mb-3">
-                        <InputGroup.Text id="basic-addon5">
-                            No. of Copies
-                        </InputGroup.Text>
-                        <Form.Control
-                            placeholder="No. of Copies"
-                            aria-label="No. of Copies"
-                            aria-describedby="basic-addon5"
-                            type="number"
-                            value={book.copies}
-                            onChange={(e) => {
-                                handleBookDetailsChange(e, 'copies');
-                            }}
-                        />
-                    </InputGroup>
+                    {props.create && (
+                        <InputGroup className="mb-3">
+                            <InputGroup.Text id="basic-addon4">
+                                Password
+                            </InputGroup.Text>
+                            <Form.Control
+                                placeholder="Password"
+                                aria-label="Password"
+                                aria-describedby="basic-addon4"
+                                value={user.password}
+                                onChange={(e) => {
+                                    handleUserDetailsChange(e, 'password');
+                                }}
+                            />
+                        </InputGroup>
+                    )}
                 </Modal.Body>
                 <Modal.Footer>
                     <Button
@@ -205,17 +173,17 @@ function AdminAction(props) {
                         Close
                     </Button>
                     {props.create ? (
-                        <Button variant="primary" onClick={CreateBookAction}>
+                        <Button variant="primary" onClick={CreateUserAction}>
                             Create
                         </Button>
                     ) : (
                         <>
-                            <Button variant="danger" onClick={deleteBookAction}>
+                            <Button variant="danger" onClick={deleteUserAction}>
                                 Delete
                             </Button>
                             <Button
                                 variant="primary"
-                                onClick={updateBookAction}
+                                onClick={updateUserAction}
                             >
                                 Update
                             </Button>
@@ -239,7 +207,7 @@ function AdminAction(props) {
                         </strong>
                     </Toast.Header>
                     <Toast.Body className="text-white">
-                        Book {succesText}d successfully.
+                        User {succesText}d and sent for approval.
                     </Toast.Body>
                 </Toast>
             </ToastContainer>
