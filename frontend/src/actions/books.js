@@ -6,6 +6,8 @@ import {
     DELETE_BOOK,
     BORROW_BOOK,
     RETURN_BOOK,
+    ANALYTICS_GENRE,
+    ANALYTICS_PUBLISHED_YEAR,
 } from './types';
 
 import apiService from '../services/apiService';
@@ -74,6 +76,29 @@ export const returnBook = (id) => async (dispatch) => {
     try {
         const res = await apiService.returnBook(id);
         dispatch({ type: RETURN_BOOK });
+        return await Promise.resolve(res.data);
+    } catch (err) {
+        return Promise.reject(err);
+    }
+};
+
+export const getGenreAnalytics = () => async (dispatch) => {
+    try {
+        const res = await apiService.getGenreAnalytics();
+        dispatch({ type: ANALYTICS_GENRE, genreAnalytics: res.data });
+        return await Promise.resolve(res.data);
+    } catch (err) {
+        return Promise.reject(err);
+    }
+};
+
+export const getPublishedYearAnalytics = () => async (dispatch) => {
+    try {
+        const res = await apiService.getPublishedYearAnalytics();
+        dispatch({
+            type: ANALYTICS_PUBLISHED_YEAR,
+            publishedYearAnalytics: res.data,
+        });
         return await Promise.resolve(res.data);
     } catch (err) {
         return Promise.reject(err);

@@ -6,11 +6,15 @@ import {
     DELETE_BOOK,
     BORROW_BOOK,
     RETURN_BOOK,
+    ANALYTICS_GENRE,
+    ANALYTICS_PUBLISHED_YEAR,
 } from '../actions/types';
 
 const initialState = {
     books: [],
     book: {},
+    genreAnalytics: [],
+    publishedYearAnalytics: [],
 };
 
 const bookReducer = (state = initialState, action) => {
@@ -29,6 +33,13 @@ const bookReducer = (state = initialState, action) => {
             return { ...state };
         case RETURN_BOOK:
             return { ...state };
+        case ANALYTICS_GENRE:
+            return { ...state, genreAnalytics: action.genreAnalytics };
+        case ANALYTICS_PUBLISHED_YEAR:
+            return {
+                ...state,
+                publishedYearAnalytics: action.publishedYearAnalytics,
+            };
         default:
             return state;
     }

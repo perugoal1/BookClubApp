@@ -75,6 +75,14 @@ const deleteUser = (id: string) => {
     return http.delete(`/user/${id}/delete`);
 };
 
+const getGenreAnalytics = () => {
+    return http.get(`/analytics/genre`);
+};
+
+const getPublishedYearAnalytics = () => {
+    return http.get(`/analytics/published-year`);
+};
+
 const apiService = {
     getBookDetails,
     getAllBookDetails,
@@ -93,6 +101,8 @@ const apiService = {
     createUser,
     updateUser,
     deleteUser,
+    getGenreAnalytics,
+    getPublishedYearAnalytics,
 };
 
 export default apiService;
