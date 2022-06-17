@@ -94,7 +94,7 @@ Run the below commands to start local dev server
 
    All the services are listed in `package.json`.
    ```sh
-   docker-compose -f docker-compose-dev.yml up
+   docker-compose up
    ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -174,22 +174,22 @@ Analytics APIs
 
 To implement the funtionalities 3 collections have been created - (users, books, makerChecker)
 
-User Collection: <br/>
-It hold as the user data documents. Below is the schema.
+<b>User Collection</b> <br/>
+It hold all the user data documents. Below is the schema.
 ![user-schema][user-schema]
 
-Book Collection: <br/>
-It hold as the book data documents. Below is the schema.
+<b>Book Collection</b>  <br/>
+It hold all the book data documents. Below is the schema.
 ![book-schema][book-schema]
 
-Maker Checker Collection: <br/>
-It hold as the user data documents, that are waiting for approval from another admin. Once apporved the data get transferred to Users Collection. Below is the schema.
+<b>Maker Checker Collection</b>  <br/>
+It hold all the user data documents, that are waiting for approval from another admin. Once approved, the data get transferred to Users Collection. Below is the schema.
 ![maker-checker-schema][maker-checker-schema]
 
 ####  Scalability of the project
 - The project can easily be scaled in terms of both code development and deployment
 - Linting and prettier tools have been integrated within the project, which helps in maintaining proper coding standards when the application grows and scales.
-- backend app is containerised and built as as image. It will help us to deploy them as containers which have the ablity to scale easily.
+- Backend app is containerised and built as as image. It will help us to deploy them as containers which have the ablity to scale easily.
 - Also mongodb database comes with the ablility of horizontal scaling / sharding, which helps.
 - Nodejs also helps in scaling. The thread does not cause a bottleneck because all I/O is evented and asynchronous and can handle huge concurrent load.
 
@@ -198,7 +198,7 @@ It hold as the user data documents, that are waiting for approval from another a
 ## Features Implemented
 
 - [x] Authentication for user and session handling.
-- [x] Used Data grid to show data whic also supports sorting, pagination and filtering
+- [x] Used Data grid to show data which also supports sorting, pagination and filtering
 - [X] User Management
     - Lists all the users
     - Allows Admin to add/remove/update users
@@ -218,10 +218,10 @@ It hold as the user data documents, that are waiting for approval from another a
 ## Improvements Needed
 The following improvements need to be made to fix minor issues
 
-- [] Handle edge cases
-- [] Have more reobust validation
-- [] Make UI more appealing
-- [] Use typescript through out app. Now its used only sparingly. Need to improve on this.
+- Handle edge cases
+- Have more robust validation
+- Make UI more appealing
+- Use typescript through-out the app. Now its used only sparingly. Need to improve on this.
 
 
 
