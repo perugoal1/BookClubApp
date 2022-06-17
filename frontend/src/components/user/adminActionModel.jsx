@@ -98,7 +98,7 @@ function AdminAction(props) {
                 keyboard={false}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>{user.name}</Modal.Title>
+                    <Modal.Title>Create / Edit / Delete User</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <InputGroup className="mb-3">
