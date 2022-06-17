@@ -109,12 +109,12 @@ Run the below commands to start local dev server
 
    For Frontend: All the services are listed in `./frontend/Dockerfile`.
    ```sh
-   cd frontend && docker build -t bookAppFrontend .
+   cd frontend && docker build -t book-app-frontend .
    ```
 
    For Backend: All the services are listed in `./backend/Dockerfile`.
    ```sh
-   cd backend && docker build -t bookAppBackend .
+   cd backend && docker build -t book-app-backend .
    ```
 <p align="right">(<a href="#top">back to top</a>)</p>
 
