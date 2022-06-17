@@ -61,6 +61,7 @@ A web console for easier management of book fan club, allowing its members to bo
 List of frameworks/libraries used in the project.
 
 * [React.js](https://reactjs.org/)
+* [Redux](https://redux.js.org/)
 * [React Bootstrap](https://react-bootstrap.github.io/)
 * [Recharts](https://recharts.org/en-US)
 * [Nodejs](https://nodejs.org/en/)
@@ -82,7 +83,7 @@ Following software is required to run the project.
   Installation Reference: [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
 
 
-### Development Setup
+### Development and Prod Setup
 
 Run the below commands to start local dev server
 
@@ -90,13 +91,31 @@ Run the below commands to start local dev server
    ```sh
    git clone https://github.com/perugoal1/BookClubApp.git
    ```
-2. Run Docker compose command to start frontend and backend
+2. Run following Docker compose command to start frontend and backend for development
 
-   All the services are listed in `package.json`.
+   All the services are listed in `docker-compose.yml`.
    ```sh
    docker-compose up
    ```
 
+3. Run following Docker compose command to run frontend and backend similar to production setup
+
+   All the services are listed in `docker-compose-prod.yml`.
+   ```sh
+   docker-compose -f docker-compose-prod.yml up --build
+   ```
+
+3. To build images of frontend and backend use the following command
+
+   For Frontend: All the services are listed in `./frontend/Dockerfile`.
+   ```sh
+   cd frontend && docker build -t bookAppFrontend .
+   ```
+
+   For Backend: All the services are listed in `./backend/Dockerfile`.
+   ```sh
+   cd backend && docker build -t bookAppBackend .
+   ```
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Design and Development Explanation
@@ -212,6 +231,7 @@ It hold all the user data documents, that are waiting for approval from another 
 - [x] Custom hooks for handling auth data, session and RBAC of web pages.
 - [X] Implemented a maker checker rule for adding, removing and updating users, to be approved by another admin.
 - [X] Implemented CI pipleine using github actions that check code quality using lint and prettier, when the code in pushed to the githb repo.
+- [X] Setup test data in './database/mongo-init.js' for development purpose.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
