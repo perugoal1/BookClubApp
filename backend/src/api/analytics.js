@@ -33,8 +33,8 @@ router.get('/published-year', async (req, res) => {
                     $sum: 1,
                 },
             },
-           
-        }, {$sort:{"_id": 1}}, 
+        },
+        { $sort: { _id: 1 } },
     ]);
     res.send(bookData);
 });
